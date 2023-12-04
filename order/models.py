@@ -166,6 +166,7 @@ def validate_order_is_returned(value: Order):
 
 class OrderReturn(TimeStampedModel):
     class SolutionChoice(models.TextChoices):
+        PENDING = 'pending', _('pending')
         MONEY = 'money', _('return money to the client')
         NEW_ORDER = 'new_order', _(
             'create a new order to replace the returned one',
@@ -182,6 +183,7 @@ class OrderReturn(TimeStampedModel):
         _('solution'),
         max_length=15,
         choices=SolutionChoice.choices,
+        default=SolutionChoice.PENDING,
     )
 
     new_order = models.OneToOneField(
