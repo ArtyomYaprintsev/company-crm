@@ -139,16 +139,12 @@ class Order(OrderProperties):
         verbose_name_plural = _('orders')
         permissions = [
             (
-                'view_any_status',
-                'Can view an order with any status',
+                'manage_in_assembly_only',
+                'Can manage an order with `in assembly` process status only',
             ),
             (
-                'view_in_assembly_only',
-                'Can view an order with `in assembly` status only',
-            ),
-            (
-                'view_in_delivery_only',
-                'Can view an order with `in delivery` status only',
+                'manage_in_delivery_only',
+                'Can manage an order with `in delivery` process status only',
             ),
         ]
 
