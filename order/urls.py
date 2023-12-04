@@ -1,8 +1,7 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
 from order.views import LoginUser, OrderViewSet
-
 
 router = SimpleRouter()
 router.register('', OrderViewSet)
