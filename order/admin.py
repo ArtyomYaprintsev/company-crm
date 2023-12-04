@@ -61,9 +61,9 @@ class FormAdmin(OrderPropertyAdmin):
 @admin.register(models.StandardOrder)
 class StandardOrderAdmin(admin.ModelAdmin):
     list_display = (
+        'name',
         'color',
         'size',
-        'name',
         'form',
     )
     search_fields = ('name',)
@@ -100,8 +100,6 @@ class OrderAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
 
         if request.user:
-            print(request.user.get_all_permissions())
-
             if request.user.is_superuser:
                 return queryset
 
