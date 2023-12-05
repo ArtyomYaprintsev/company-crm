@@ -11,6 +11,13 @@ from order import models
 
 @admin.register(models.Client)
 class ClientAdmin(UserAdmin):
+    """`Client` model admin.
+
+    The `Client` model related to the `settings.AUTH_USER_MODEL` with
+    one-to-one relation, so the admin model inherited from
+    `django.contrib.auth.admin.UserAdmin`.
+    """
+
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
@@ -38,27 +45,31 @@ class ClientAdmin(UserAdmin):
 
 
 class OrderPropertyAdmin(admin.ModelAdmin):
+    """The `Order` property model admin."""
+
     list_display = ('name', 'description')
     search_fields = ('name',)
 
 
 @admin.register(models.Color)
 class ColorAdmin(OrderPropertyAdmin):
-    pass
+    """`Order` color property model admin."""
 
 
 @admin.register(models.Size)
 class SizeAdmin(OrderPropertyAdmin):
-    pass
+    """`Order` size property model admin."""
 
 
 @admin.register(models.Form)
 class FormAdmin(OrderPropertyAdmin):
-    pass
+    """`Order` form property model admin."""
 
 
 @admin.register(models.StandardOrder)
 class StandardOrderAdmin(admin.ModelAdmin):
+    """`StandardOrder` model admin."""
+
     list_display = (
         'name',
         'color',
@@ -70,6 +81,8 @@ class StandardOrderAdmin(admin.ModelAdmin):
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
+    """`Order` model admin."""
+
     list_display = (
         'code',
         'client',
@@ -86,11 +99,13 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     def has_in_assembly_only_permission(self, request):
+        """Check that user has a `manage_in_assembly_only` permission."""
         return request.user.has_perm(
             "%s.%s" % (self.opts.app_label, 'manage_in_assembly_only'),
         )
 
     def has_in_delivery_only_permission(self, request):
+        """Check that user has a `manage_in_delivery_only` permission."""
         return request.user.has_perm(
             "%s.%s" % (self.opts.app_label, 'manage_in_delivery_only'),
         )
@@ -121,6 +136,7 @@ class OrderAdmin(admin.ModelAdmin):
         description='Set selected orders process status to `in assembly`',
     )
     def update_order_to_in_assembly_status(self, request, queryset):
+        # pylint: disable=unused-argument
         return queryset.update(
             process=models.Order.ProcessStatusChoice.IN_ASSEMBLY,
         )
@@ -130,15 +146,17 @@ class OrderAdmin(admin.ModelAdmin):
         description='Set selected orders process status to `in delivery`',
     )
     def update_order_to_in_delivery_status(self, request, queryset):
+        # pylint: disable=unused-argument
         return queryset.update(
             process=models.Order.ProcessStatusChoice.IN_DELIVERY,
         )
 
     @admin.action(
         permissions=('in_delivery_only',),
-        description='Set selected orders as process status to `delivered`',
+        description='Set selected orders process status to `delivered`',
     )
     def complete_order(self, request, queryset):
+        # pylint: disable=unused-argument
         return queryset.update(
             status=models.Order.StatusChoice.COMPLETED,
             process=models.Order.ProcessStatusChoice.DELIVERED,

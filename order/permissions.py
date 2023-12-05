@@ -5,6 +5,11 @@ from order.models import Order
 
 
 class ClientOnlyPermission(BasePermission):
+    """Allows access for service clients.
+
+    Checks that user have related `order.Client` model.
+    """
+
     message = _('The action is allowed only for service clients.')
 
     def has_permission(self, request, view):
@@ -12,6 +17,8 @@ class ClientOnlyPermission(BasePermission):
 
 
 class UpdateDeliveredOrderOnly(BasePermission):
+    """Allows access for delivered orders only."""
+
     message = _('The action is allowed only for delivered orders.')
 
     def has_object_permission(self, request, view, obj):
