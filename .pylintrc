@@ -4,13 +4,17 @@ suggestion-mode=yes
 
 # Enable the plugins
 load-plugins=pylint_pytest,
+             pylint_django,
              pylint.extensions.docstyle,
              pylint.extensions.docparams,
 
 accept-no-param-doc=no
 default-docstring-type=google
+django-settings-module=config.settings
 
 ignored-modules=invoke
+ignore=migrations,
+       venv,
 
 [MESSAGES CONTROL]
 disable:too-few-public-methods,
