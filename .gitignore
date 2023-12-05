@@ -16,5 +16,8 @@ db.sqlite3
 venv/
 venv.bak/
 
+# frontend
+frontend/
+
 # local
 .env
